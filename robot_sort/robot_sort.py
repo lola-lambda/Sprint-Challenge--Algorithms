@@ -100,8 +100,51 @@ class SortingRobot:
         """
         Sort the robot's list.
         """
-        # Fill this out
-        pass
+        
+        while not self.light_is_on():
+            self.set_light_on()
+            while self.can_move_right():
+                self.swap_item()
+                self.move_right()
+                if self.compare_item() is 1:
+                    self.swap_item()
+                    self.move_left()
+                    self.swap_item()
+                    self.move_right()
+                    self.set_light_off()
+                else:
+                    self.move_left()
+                    self.swap_item()
+                    self.move_right()
+            while self.can_move_left():
+                self.swap_item()
+                self.move_left()
+                if self.compare_item() is -1:
+                    self.swap_item()
+                    self.move_right()
+                    self.swap_item()
+                    self.move_left()
+                    self.set_light_off()
+                else:
+                    self.move_right()
+                    self.swap_item()
+                    self.move_left()
+            
+        #  Overall Plan:
+        #  Use light to determine if sorting is complete
+        #  Sort by moving, comparing, and swapping
+        #  Sort while moving right and left
+
+        #  Detailed Plan:
+        #  1. continually sort while the light is off
+        #  2. turn on the light
+        #  3. while the robot can move right, swap item and move right
+        #  4. compare the current item to the next item
+        #  5. if the held item is greater, then swap, move back a step, swap again, turn off the light
+        #  6. otherwise, step back to leave that item where it was and continue rightward
+        #  7. when the robot reaches the right end of the list, it should turn around
+        #  8. then it should follow steps 3 - 6 for the left (substituting right for left, and 1 for -1 in the comparison)
+        #  9. if the robot gets through an iteration of the items without needing to change the position of any items, sorting is complete (light stays on)
 
 
 if __name__ == "__main__":
@@ -109,7 +152,6 @@ if __name__ == "__main__":
     # with `python robot_sort.py`
 
     l = [15, 41, 58, 49, 26, 4, 28, 8, 61, 60, 65, 21, 78, 14, 35, 90, 54, 5, 0, 87, 82, 96, 43, 92, 62, 97, 69, 94, 99, 93, 76, 47, 2, 88, 51, 40, 95, 6, 23, 81, 30, 19, 25, 91, 18, 68, 71, 9, 66, 1, 45, 33, 3, 72, 16, 85, 27, 59, 64, 39, 32, 24, 38, 84, 44, 80, 11, 73, 42, 20, 10, 29, 22, 98, 17, 48, 52, 67, 53, 74, 77, 37, 63, 31, 7, 75, 36, 89, 70, 34, 79, 83, 13, 57, 86, 12, 56, 50, 55, 46]
-
     robot = SortingRobot(l)
 
     robot.sort()
